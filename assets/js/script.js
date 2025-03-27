@@ -1,22 +1,21 @@
 $(function () {
   // ========== Form-select-option ========== //
-  $(".step_1").on('click', function () {
+  $(".step_1").on("click", function () {
     $(".step_1").removeClass("active");
     $(this).addClass("active");
   });
-  $(".step_2").on('click', function () {
+  $(".step_2").on("click", function () {
     $(".step_2").removeClass("active");
     $(this).addClass("active");
   });
-  $(".step_3").on('click', function () {
+  $(".step_3").on("click", function () {
     $(".step_3").removeClass("active");
     $(this).addClass("active");
   });
-  $(".step_4").on('click', function () {
+  $(".step_4").on("click", function () {
     $(".step_4").removeClass("active");
     $(this).addClass("active");
   });
-
 });
 
 function showTab(n) {
@@ -30,18 +29,16 @@ function showTab(n) {
   } else {
     document.getElementById("prevBtn").style.display = "inline";
   }
-  if (n == (x.length - 1)) {
+  if (n == x.length - 1) {
     document.getElementById("nextBtn").innerHTML = "Submit";
   } else {
     document.getElementById("nextBtn").innerHTML = "Next Question";
   }
   // ... and run a function that displays the correct step indicator:
-  fixStepIndicator(n)
+  fixStepIndicator(n);
 }
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
-
-
 
 function nextPrev(n) {
   // This function will figure out which tab to display
@@ -64,7 +61,10 @@ function nextPrev(n) {
 
 function validateForm() {
   // This function deals with validation of the form fields
-  var x, y, i, valid = true;
+  var x,
+    y,
+    i,
+    valid = true;
   x = document.getElementsByClassName("multisteps_form_panel");
   y = x[currentTab].getElementsByTagName("input");
   // A loop that checks every input field in the current tab:
@@ -86,7 +86,8 @@ function validateForm() {
 
 function fixStepIndicator(n) {
   // This function removes the "active" class of all steps...
-  var i, x = document.getElementsByClassName("step");
+  var i,
+    x = document.getElementsByClassName("step");
   for (i = 0; i < x.length; i++) {
     x[i].className = x[i].className.replace(" active", "");
   }
@@ -106,12 +107,12 @@ function move() {
     } else if (width >= 100) {
       width = 0;
       aim = 25;
-      elem.style.width = width + '%';
-      elem.innerHTML = width * 1 + '%';
+      elem.style.width = width + "%";
+      elem.innerHTML = width * 1 + "%";
     } else {
       width++;
-      elem.style.width = width + '%';
-      elem.innerHTML = width * 1 + '%';
+      elem.style.width = width + "%";
+      elem.innerHTML = width * 1 + "%";
     }
   }
 }
@@ -121,6 +122,8 @@ let countdown = null;
 
 function startTimer() {
   const timerDisplay = document.getElementById("timer");
+  bgMusic.play();
+  bgMusic.volume = 0.5;
 
   if (countdown) clearInterval(countdown);
 
@@ -147,166 +150,261 @@ function timeUpAction() {
   evaluateQuizAndShowResult();
 }
 
-document.getElementById("startBtn").addEventListener("click", function () {
-  document.getElementById("start_screen").style.display = "none";
-  document.getElementById("quiz_wrapper").style.display = "block";
-
-  showTab(currentTab); // show first step
-  vibrate();
-  startTimer(); // starts countdown
-})
-
 const questions = [
   {
-    question: "What is the primary benefit of Malik's custom printing services?",
-    options: ["Limited design options", "Personalization for unique branding", "Standardized templates only"],
-    correct: 1
+    question:
+      "What is the primary benefit of Malik's custom printing services?",
+    options: [
+      "Limited design options",
+      "Personalization for unique branding",
+      "Standardized templates only",
+    ],
+    correct: 1,
   },
   {
     question: "Which item can you personalize using Malik's printing services?",
     options: ["Aprons", "Oven gloves", "Both A and B"],
-    correct: 2
+    correct: 2,
   },
   {
-    question: "What type of products does Malik's offer for customization in the kitchen category?",
-    options: ["Custom aprons & oven gloves", "Personalized cutting boards", "Customized spice jars"],
-    correct: 0
+    question:
+      "What type of products does Malik's offer for customization in the kitchen category?",
+    options: [
+      "Custom aprons & oven gloves",
+      "Personalized cutting boards",
+      "Customized spice jars",
+    ],
+    correct: 0,
   },
   {
-    question: "How can personalized kitchen tools from Malik's benefit a business?",
-    options: ["They can't; they're only for personal use", "Enhance brand visibility in culinary settings", "Serve as standard kitchen equipment"],
-    correct: 1
+    question:
+      "How can personalized kitchen tools from Malik's benefit a business?",
+    options: [
+      "They can't; they're only for personal use",
+      "Enhance brand visibility in culinary settings",
+      "Serve as standard kitchen equipment",
+    ],
+    correct: 1,
   },
   {
     question: "What is a popular customized gift item at Malik's?",
-    options: ["Standardized mugs", "Personalized mugs with custom prints", "Generic keychains"],
-    correct: 1
+    options: [
+      "Standardized mugs",
+      "Personalized mugs with custom prints",
+      "Generic keychains",
+    ],
+    correct: 1,
   },
   {
     question: "Which of the following can be printed on at Malik's?",
     options: ["Face masks", "Keychains", "Both A and B"],
-    correct: 2
+    correct: 2,
   },
   {
     question: "What is the advantage of printing on plexi LED items?",
-    options: ["Dull display", "Vibrant illuminated designs", "Limited color options"],
-    correct: 1
+    options: [
+      "Dull display",
+      "Vibrant illuminated designs",
+      "Limited color options",
+    ],
+    correct: 1,
   },
   {
     question: "Why choose Malik's for printing on smokers' products?",
-    options: ["Generic designs", "Custom branding opportunities", "Pre-set templates only"],
-    correct: 1
+    options: [
+      "Generic designs",
+      "Custom branding opportunities",
+      "Pre-set templates only",
+    ],
+    correct: 1,
   },
   {
     question: "Which baby items can be customized at Malik's?",
     options: ["Baby bottles", "Baby bibs", "Both A and B"],
-    correct: 2
+    correct: 2,
   },
   {
     question: "How does printing on clocks serve as a promotional tool?",
-    options: ["Displays time only", "Keeps brand visible daily", "Acts as a regular clock"],
-    correct: 1
+    options: [
+      "Displays time only",
+      "Keeps brand visible daily",
+      "Acts as a regular clock",
+    ],
+    correct: 1,
   },
   {
     question: "What fashion items can be personalized through Malik's?",
     options: ["T-shirts", "Caps", "Both A and B"],
-    correct: 2
+    correct: 2,
   },
   {
     question: "Why are customized puzzles a unique gift option?",
-    options: ["They are generic", "Offer personalized entertainment", "Limited to standard images"],
-    correct: 1
+    options: [
+      "They are generic",
+      "Offer personalized entertainment",
+      "Limited to standard images",
+    ],
+    correct: 1,
   },
   {
     question: "What is the benefit of printing on trophies?",
-    options: ["Generic awards", "Personalized recognition", "Standardized designs"],
-    correct: 1
+    options: [
+      "Generic awards",
+      "Personalized recognition",
+      "Standardized designs",
+    ],
+    correct: 1,
   },
   {
     question: "How can businesses utilize printed bottles from Malik's?",
-    options: ["Generic water containers", "Promotional merchandise", "Regular drinkware"],
-    correct: 1
+    options: [
+      "Generic water containers",
+      "Promotional merchandise",
+      "Regular drinkware",
+    ],
+    correct: 1,
   },
   {
     question: "What is a unique feature of printing on coasters?",
-    options: ["Standard designs", "Custom messages or logos", "Limited to specific materials"],
-    correct: 1
+    options: [
+      "Standard designs",
+      "Custom messages or logos",
+      "Limited to specific materials",
+    ],
+    correct: 1,
   },
   {
     question: "How does printing on flags benefit events?",
-    options: ["Generic decoration", "Custom branding for visibility", "Standard flag designs"],
-    correct: 1
+    options: [
+      "Generic decoration",
+      "Custom branding for visibility",
+      "Standard flag designs",
+    ],
+    correct: 1,
   },
   {
     question: "What is the advantage of customizing mini-me figures?",
     options: ["Generic figurines", "Personalized replicas", "Standard models"],
-    correct: 1
+    correct: 1,
   },
   {
     question: "Why choose Malik's for printing on pillows?",
-    options: ["Limited design options", "Custom comfort and branding", "Standard pillowcases"],
-    correct: 1
+    options: [
+      "Limited design options",
+      "Custom comfort and branding",
+      "Standard pillowcases",
+    ],
+    correct: 1,
   },
   {
     question: "What is the purpose of printing on rocky tiles?",
-    options: ["Generic home decor", "Personalized decorative pieces", "Standard tile patterns"],
-    correct: 1
+    options: [
+      "Generic home decor",
+      "Personalized decorative pieces",
+      "Standard tile patterns",
+    ],
+    correct: 1,
   },
   {
-    question: "How can wooden items be enhanced through Malik's printing services?",
-    options: ["Generic wood products", "Custom engravings or prints", "Standard wood finishes"],
-    correct: 1
+    question:
+      "How can wooden items be enhanced through Malik's printing services?",
+    options: [
+      "Generic wood products",
+      "Custom engravings or prints",
+      "Standard wood finishes",
+    ],
+    correct: 1,
   },
   {
     question: "What is a benefit of printing on calendars?",
-    options: ["Generic date display", "Year-round brand exposure", "Standard calendar layouts"],
-    correct: 1
+    options: [
+      "Generic date display",
+      "Year-round brand exposure",
+      "Standard calendar layouts",
+    ],
+    correct: 1,
   },
   {
     question: "How does printing on crystals serve as a gift option?",
-    options: ["Generic ornaments", "Elegant personalized keepsakes", "Standard crystal designs"],
-    correct: 1
+    options: [
+      "Generic ornaments",
+      "Elegant personalized keepsakes",
+      "Standard crystal designs",
+    ],
+    correct: 1,
   },
   {
     question: "What is the advantage of customizing mouse pads?",
-    options: ["Generic desk accessory", "Personalized workspace branding", "Standard mouse pad designs"],
-    correct: 1
+    options: [
+      "Generic desk accessory",
+      "Personalized workspace branding",
+      "Standard mouse pad designs",
+    ],
+    correct: 1,
   },
   {
     question: "Why print on plates through Malik's services?",
-    options: ["Generic dinnerware", "Custom commemorative items", "Standard plate patterns"],
-    correct: 1
+    options: [
+      "Generic dinnerware",
+      "Custom commemorative items",
+      "Standard plate patterns",
+    ],
+    correct: 1,
   },
   {
     question: "How can tiles and frames be personalized at Malik's?",
-    options: ["Generic home accessories", "Custom images or messages", "Standard designs only"],
-    correct: 1
+    options: [
+      "Generic home accessories",
+      "Custom images or messages",
+      "Standard designs only",
+    ],
+    correct: 1,
   },
   {
     question: "What is the benefit of Malik's finishing & binding services?",
-    options: ["Basic document assembly", "Professional presentation of materials", "Standard binding options only"],
-    correct: 1
+    options: [
+      "Basic document assembly",
+      "Professional presentation of materials",
+      "Standard binding options only",
+    ],
+    correct: 1,
   },
   {
     question: "How can promo prints from Malik's enhance marketing?",
-    options: ["Generic promotional materials", "Custom-designed marketing tools", "Standard templates"],
-    correct: 1
+    options: [
+      "Generic promotional materials",
+      "Custom-designed marketing tools",
+      "Standard templates",
+    ],
+    correct: 1,
   },
   {
     question: "What is the advantage of Malik's packaging services?",
-    options: ["Generic packaging solutions", "Customized packaging for brand identity", "Standard box designs"],
-    correct: 1
+    options: [
+      "Generic packaging solutions",
+      "Customized packaging for brand identity",
+      "Standard box designs",
+    ],
+    correct: 1,
   },
   {
     question: "Why utilize Malik's small prints services?",
-    options: ["Limited print options", "High-quality prints for small-scale needs", "Standard print sizes only"],
-    correct: 1
+    options: [
+      "Limited print options",
+      "High-quality prints for small-scale needs",
+      "Standard print sizes only",
+    ],
+    correct: 1,
   },
   {
     question: "How do Malik's design services benefit clients?",
-    options: ["Generic design assistance", "Tailored creative solutions", "Standardized design templates"],
-    correct: 1
-  }
+    options: [
+      "Generic design assistance",
+      "Tailored creative solutions",
+      "Standardized design templates",
+    ],
+    correct: 1,
+  },
 ];
 
 function renderQuestions() {
@@ -319,19 +417,23 @@ function renderQuestions() {
     const stepClass = `step_${index + 1}`;
     const nameAttr = `question_${index}`;
 
-    const optionsHTML = q.options.map((opt, i) => {
-      const inputId = `${nameAttr}_opt${i}`;
-      const isCorrect = i === q.correct ? 'correct-answer' : '';
-      return `
+    const optionsHTML = q.options
+      .map((opt, i) => {
+        const inputId = `${nameAttr}_opt${i}`;
+        const isCorrect = i === q.correct ? "correct-answer" : "";
+        return `
         <div class="form-check position-relative mb-3">
           <input class="form-check-input d-none" type="radio" id="${inputId}" name="${nameAttr}" value="${i}">
           <label for="${inputId}"
-            class="${stepClass} animate__animated animate__fadeInRight animate_${(i + 1) * 25}ms rounded-pill text-start text-white d-block py-2 px-4 ${isCorrect}">
+            class="${stepClass} animate__animated animate__fadeInRight animate_${
+          (i + 1) * 25
+        }ms rounded-pill text-start text-white d-block py-2 px-4 ${isCorrect}">
             ${opt}
           </label>
         </div>
       `;
-    }).join('');
+      })
+      .join("");
 
     const stepHTML = `
       <div class="multisteps_form_panel step" style="display:none">
@@ -370,48 +472,31 @@ function renderQuestions() {
   });
 
   // 🔥 Activate .active styling on click
-  document.querySelectorAll(".form_items input[type=radio]").forEach((radio) => {
-    radio.addEventListener("change", function () {
-      vibrate();
-      // Remove .active from siblings
-      const name = this.name;
-      document.querySelectorAll(`input[name='${name}']`).forEach(r => {
-        r.nextElementSibling?.classList?.remove("active");
+  document
+    .querySelectorAll(".form_items input[type=radio]")
+    .forEach((radio) => {
+      radio.addEventListener("change", function () {
+        vibrate();
+        // Remove .active from siblings
+        const name = this.name;
+        document.querySelectorAll(`input[name='${name}']`).forEach((r) => {
+          r.nextElementSibling?.classList?.remove("active");
+        });
+
+        // Add .active to selected
+        const label = document.querySelector(`label[for='${this.id}']`);
+        if (label) label.classList.add("active");
       });
-
-      // Add .active to selected
-      const label = document.querySelector(`label[for='${this.id}']`);
-      if (label) label.classList.add("active");
     });
-  });
 }
-
-
 
 function getRandomQuestions(count = 4) {
   const shuffled = questions.sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
 
-
-document.getElementById("startBtn").addEventListener("click", function () {
-  vibrate(); // 💥
-
-  document.getElementById("start_screen").style.display = "none";
-  document.getElementById("quiz_wrapper").style.display = "block";
-
-  renderQuestions();      // Create 4 questions
-  setTimeout(() => {
-    currentTab = 0;
-    showTab(currentTab);  // Now safe to show first step
-    vibrate();
-    startTimer();         // Start countdown
-  }, 100); // small delay to make sure DOM is ready
-});
-
-
 function evaluateQuizAndShowResult() {
-  const panels = document.querySelectorAll('.multisteps_form_panel');
+  const panels = document.querySelectorAll(".multisteps_form_panel");
   let score = 0;
 
   panels.forEach((panel, index) => {
@@ -420,15 +505,17 @@ function evaluateQuizAndShowResult() {
 
     // Find the correct one (based on its parent label having 'correct-answer')
     let correctValue = null;
-    radios.forEach(radio => {
+    radios.forEach((radio) => {
       const label = document.querySelector(`label[for="${radio.id}"]`);
-      if (label && label.classList.contains('correct-answer')) {
+      if (label && label.classList.contains("correct-answer")) {
         correctValue = radio.value;
       }
     });
 
     // Find which option was selected
-    const selected = panel.querySelector(`input[name="question_${index}"]:checked`);
+    const selected = panel.querySelector(
+      `input[name="question_${index}"]:checked`
+    );
 
     if (selected && selected.value === correctValue) {
       score++;
@@ -442,7 +529,9 @@ function evaluateQuizAndShowResult() {
   // Show result
   const resultScreen = document.getElementById("result_screen");
   resultScreen.style.display = "block";
-  document.getElementById("score_display").textContent = `You scored ${score} out of 4`;
+  document.getElementById(
+    "score_display"
+  ).textContent = `You scored ${score} out of 4`;
 
   const title = document.getElementById("result_title");
   const reward = document.getElementById("reward_message");
@@ -450,17 +539,18 @@ function evaluateQuizAndShowResult() {
   if (score >= 3) {
     title.textContent = "🎉 Congratulations!";
     reward.textContent = "You won a gift! 🎁";
+    bgMusic.pause();
     winSound.play(); // 🔥 play win
     triggerConfetti();
   } else {
     title.textContent = "😢 Better luck next time!";
     reward.textContent = "Try again to win a gift!";
+    bgMusic.volume = 0.3;
     failSound.play(); // 😢 play fail
   }
 
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
 
 function triggerConfetti() {
   const duration = 3 * 1000;
@@ -486,13 +576,13 @@ function triggerConfetti() {
   })();
 }
 
-
 // Get audio elements
 const bgMusic = document.getElementById("bgMusic");
 const clickSound = document.getElementById("clickSound");
 const warningSound = document.getElementById("warningSound");
 const winSound = document.getElementById("winSound");
 const failSound = document.getElementById("failSound");
+const eatSound = document.getElementById("eatSound");
 
 // 🔊 Click sound on answer/select
 document.addEventListener("click", function (e) {
@@ -502,15 +592,246 @@ document.addEventListener("click", function (e) {
   }
 });
 
-// 🔁 Background music on game start
-document.getElementById("startBtn").addEventListener("click", function () {
-  bgMusic.volume = 0.3;
-  bgMusic.play();
-});
-
-
 function vibrate(duration = 50) {
   if ("vibrate" in navigator) {
     navigator.vibrate(duration);
   }
+}
+
+function startGame(mode) {
+  document.getElementById("select_mode_screen").style.display = "none";
+
+  if (mode === "kids") {
+    document.getElementById("snake_game_screen").style.display = "block";
+    let countdown = 3;
+    const countdownEl = document.getElementById("countdownNumber");
+    const countdownContainer = document.getElementById("snakeCountdown");
+
+    countdownEl.textContent = countdown;
+    countdownContainer.style.display = "flex";
+
+    const countdownInterval = setInterval(() => {
+      countdown--;
+      if (countdown === 0) {
+        clearInterval(countdownInterval);
+        countdownEl.textContent = "GO!";
+        setTimeout(() => {
+          countdownContainer.style.display = "none";
+          startSnakeGame();
+        }, 700);
+      } else {
+        countdownEl.textContent = countdown;
+        countdownEl.style.animation = "none"; // Restart animation
+        countdownEl.offsetHeight; // Trigger reflow
+        countdownEl.style.animation = null;
+      }
+    }, 1000);
+  } else if (mode === "teen") {
+    alert("Teen quiz with images coming soon!");
+  } else if (mode === "adult") {
+    renderQuestions();
+    document.getElementById("quiz_wrapper").style.display = "block";
+    showTab(currentTab);
+    vibrate();
+    startTimer();
+  }
+}
+
+function startSnakeGame() {
+  bgMusic.play();
+  enableSwipeControls();
+
+  document.addEventListener("keydown", function (e) {
+    clickSound.currentTime = 0;
+    clickSound.play(); // 🔊 play on any arrow key
+
+    if (e.key === "ArrowUp" && dy === 0) {
+      dx = 0;
+      dy = -gridSize;
+    } else if (e.key === "ArrowDown" && dy === 0) {
+      dx = 0;
+      dy = gridSize;
+    } else if (e.key === "ArrowLeft" && dx === 0) {
+      dx = -gridSize;
+      dy = 0;
+    } else if (e.key === "ArrowRight" && dx === 0) {
+      dx = gridSize;
+      dy = 0;
+    }
+  });
+
+  const canvas = document.getElementById("snakeCanvas");
+  const ctx = canvas.getContext("2d");
+
+  const gridSize = 20;
+  let snake = [
+    {
+      x: Math.floor(canvas.width / 2 / gridSize) * gridSize,
+      y: Math.floor(canvas.height / 2 / gridSize) * gridSize,
+    },
+  ];
+  let food = { x: 80, y: 80 };
+  let dx = gridSize;
+  let dy = 0;
+  let score = 0;
+  let timeLeft = 60;
+  let gameLoop;
+  let gameTimer;
+  let logo = new Image();
+  logo.src = "./assets/images/logo/M.png";
+
+  document.getElementById("snakeTimer").textContent = `Time Left: ${timeLeft}s`;
+  document.getElementById("snakeScore").textContent = `Score: ${score}`;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(logo, food.x, food.y, gridSize, gridSize);
+
+    ctx.fillStyle = "#00ff00";
+    snake.forEach((part) => {
+      ctx.fillRect(part.x, part.y, gridSize, gridSize);
+    });
+
+    const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+    snake.unshift(head);
+
+    if (
+      Math.abs(head.x - food.x) < gridSize &&
+      Math.abs(head.y - food.y) < gridSize
+    ) {
+      score++;
+      document.getElementById("snakeScore").textContent = `Score: ${score}`;
+      eatSound.currentTime = 0;
+      eatSound.play(); // ✅ added this
+
+      food = {
+        x: Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize,
+        y: Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize,
+      };
+    } else {
+      snake.pop();
+    }
+
+    // Check wall collision
+    if (
+      head.x < 0 ||
+      head.x >= canvas.width ||
+      head.y < 0 ||
+      head.y >= canvas.height
+    ) {
+      endSnakeGame("Game Over! You hit the wall.");
+    }
+
+    for (let i = 1; i < snake.length; i++) {
+      if (head.x === snake[i].x && head.y === snake[i].y) {
+        endSnakeGame("Oops! You ran into yourself.");
+      }
+    }
+  }
+
+  function endSnakeGame(message) {
+    clearInterval(gameLoop);
+    clearInterval(gameTimer);
+
+    // Hide snake game
+    document.getElementById("snake_game_screen").style.display = "none";
+
+    // Show result screen
+    const resultScreen = document.getElementById("result_screen");
+    resultScreen.style.display = "block";
+
+    // Fill in result
+    const title = document.getElementById("result_title");
+    const reward = document.getElementById("reward_message");
+    const scoreBox = document.getElementById("score_display");
+
+    scoreBox.textContent = `Your score: ${score}`;
+
+    if (score >= 5) {
+      title.textContent = "🎉 Congratulations!";
+      reward.textContent = "You won a gift! 🎁";
+      bgMusic.pause();
+      winSound.play();
+      triggerConfetti();
+    } else {
+      title.textContent = "😢 Better luck next time!";
+      reward.textContent = "Try again to win a gift!";
+      bgMusic.volume = 0.3;
+      failSound.play();
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function resetSnakeGame() {
+    snake = [{ x: 160, y: 160 }];
+    dx = gridSize;
+    dy = 0;
+    score = 0;
+    document.getElementById("snake_game_screen").style.display = "none";
+    document.getElementById("select_mode_screen").style.display = "block";
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowUp" && dy === 0) {
+      dx = 0;
+      dy = -gridSize;
+    } else if (e.key === "ArrowDown" && dy === 0) {
+      dx = 0;
+      dy = gridSize;
+    } else if (e.key === "ArrowLeft" && dx === 0) {
+      dx = -gridSize;
+      dy = 0;
+    } else if (e.key === "ArrowRight" && dx === 0) {
+      dx = gridSize;
+      dy = 0;
+    }
+  });
+
+  draw(); // draw once before moving
+  gameLoop = setInterval(draw, 100); // then move
+  gameTimer = setInterval(() => {
+    timeLeft--;
+    document.getElementById(
+      "snakeTimer"
+    ).textContent = `Time Left: ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      endSnakeGame("Time's up!");
+    }
+  }, 1000);
+}
+
+function enableSwipeControls() {
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  document.addEventListener("touchstart", function (e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  });
+
+  document.addEventListener("touchend", function (e) {
+    const dxSwipe = e.changedTouches[0].clientX - touchStartX;
+    const dySwipe = e.changedTouches[0].clientY - touchStartY;
+
+    if (Math.abs(dxSwipe) > Math.abs(dySwipe)) {
+      // Horizontal swipe
+      if (dxSwipe > 30 && dx === 0) {
+        dx = gridSize;
+        dy = 0;
+      } else if (dxSwipe < -30 && dx === 0) {
+        dx = -gridSize;
+        dy = 0;
+      }
+    } else {
+      // Vertical swipe
+      if (dySwipe > 30 && dy === 0) {
+        dx = 0;
+        dy = gridSize;
+      } else if (dySwipe < -30 && dy === 0) {
+        dx = 0;
+        dy = -gridSize;
+      }
+    }
+  });
 }

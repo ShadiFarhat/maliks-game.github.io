@@ -1,86 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maliks Game</title>
+    <!-- FontAwesome-cdn include -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <!-- Google fonts include -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap-css include -->
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <!-- Animate-css include -->
+    <link rel="stylesheet" href="./assets/css/animate.min.css" />
+    <!-- Main-StyleSheet include -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
 
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Quizo HTML Template - V.15</title>
-   <!-- FontAwesome-cdn include -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-   <!-- Google fonts include -->
-   <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
-   <!-- Bootstrap-css include -->
-   <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-   <!-- Animate-css include -->
-   <link rel="stylesheet" href="./assets/css/animate.min.css">
-   <!-- Main-StyleSheet include -->
-   <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-
-<body>
-   <div class="wrapper">
+  <body>
+    <div class="wrapper">
       <!-- Top content -->
       <div class="container-fluid p-0">
-         <div class="logo_area">
-            <a href="index.html">
-               <img src="./assets/images/logo/logo.png" alt="image_not_found">
-            </a>
-         </div>
+        <div class="logo_area">
+          <a href="index.html">
+            <img src="./assets/images/logo/logo.png" alt="image_not_found" />
+          </a>
+        </div>
       </div>
       <div class="container">
-         <div class="row">
-            <div id="start_screen" class="text-center py-5">
-               <h1 class="text-white mb-4">Ready to Start?</h1>
-               <button id="startBtn" class="f_btn text-uppercase rounded-pill">Start Game</button>
-            </div>
-            <div id="quiz_wrapper" style="display: none;">
-               <div class="question_timer text-white mb-3">
-                  <span id="timer">60</span>
-               </div>
-               <form class="multisteps_form" id="wizard" method="POST" action="#">
-                  <div id="dynamic_questions"></div>
+        <div class="row">
+          <!-- Game Mode Selector -->
+          <div id="select_mode_screen" class="text-center py-5">
+            <h1 class="text-white mb-4">Choose Your Game</h1>
+            <button
+              class="f_btn text-uppercase rounded-pill my-2"
+              onclick="startGame('kids')"
+            >
+              🐍 Kids Game</button
+            ><br />
+            <button
+              class="f_btn text-uppercase rounded-pill my-2"
+              onclick="startGame('teen')"
+            >
+              🖼️ Teen Quiz Game</button
+            ><br />
+            <button
+              class="f_btn text-uppercase rounded-pill my-2"
+              onclick="startGame('adult')"
+            >
+              🧠 Adult Quiz Game
+            </button>
+          </div>
 
-                  <div class="form_btn">
-                     <button type="button"
-                        class="f_btn rounded-pill prev_btn text-uppercase text-white position-absolute" id="prevBtn"
-                        onclick="nextPrev(-1)"> Last Question</button>
+          <!-- Snake Game Screen -->
+          <!-- Snake Game Screen -->
+          <div
+            id="snake_game_screen"
+            style="display: none"
+            class="text-center py-5"
+          >
+            <h1 class="text-white mb-4">Snake Game</h1>
+            <div id="snakeCountdown" class="countdown-screen">
+              <span id="countdownNumber">3</span>
+            </div>
+            <canvas
+              id="snakeCanvas"
+              width="500"
+              height="500"
+              style="background: #000; border: 4px solid #fff"
+            ></canvas>
+            <p class="text-white mt-3">Use arrow keys to move the snake</p>
+            <div id="snakeTimer" class="text-white mt-2 fs-4"></div>
+            <div id="snakeScore" class="text-white mt-2 fs-4"></div>
+          </div>
 
-                     <button type="button"
-                        class="f_btn rounded-pill next_btn text-uppercase text-white position-absolute" id="nextBtn"
-                        onclick="nextPrev(1)">Next Question</button>
-                  </div>
-               </form>
+          <!-- <div id="start_screen" class="text-center py-5">
+            <h1 class="text-white mb-4">Ready to Start?</h1>
+            <button id="startBtn" class="f_btn text-uppercase rounded-pill">
+              Start Game
+            </button>
+          </div> -->
+          <div id="quiz_wrapper" style="display: none">
+            <div class="question_timer text-white mb-3">
+              <span id="timer">60</span>
             </div>
-            <!-- 🎉 Result Page -->
-            <div id="result_screen" style="display:none;" class="text-center py-5 text-white">
-               <h1 class="mb-4" id="result_title"></h1>
-               <h2 id="score_display"></h2>
-               <p id="reward_message" class="mt-4 fs-4"></p>
-               <canvas id="confetti-canvas"
-                  style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
-            </div>
-         </div>
+            <form class="multisteps_form" id="wizard" method="POST" action="#">
+              <div id="dynamic_questions"></div>
+
+              <div class="form_btn">
+                <button
+                  type="button"
+                  class="f_btn rounded-pill prev_btn text-uppercase text-white position-absolute"
+                  id="prevBtn"
+                  onclick="nextPrev(-1)"
+                >
+                  Last Question
+                </button>
+
+                <button
+                  type="button"
+                  class="f_btn rounded-pill next_btn text-uppercase text-white position-absolute"
+                  id="nextBtn"
+                  onclick="nextPrev(1)"
+                >
+                  Next Question
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- 🎉 Result Page -->
+          <div
+            id="result_screen"
+            style="display: none"
+            class="text-center py-5 text-white"
+          >
+            <h1 class="mb-4" id="result_title"></h1>
+            <h2 id="score_display"></h2>
+            <p id="reward_message" class="mt-4 fs-4"></p>
+            <canvas
+              id="confetti-canvas"
+              style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+              "
+            ></canvas>
+          </div>
+        </div>
       </div>
-   </div>
+    </div>
 
-   <audio id="bgMusic" src="./assets/audio/bg-music.mp3" loop></audio>
-   <audio id="clickSound" src="./assets/audio/click.mp3"></audio>
-   <audio id="warningSound" src="./assets/audio/warning.mp3"></audio>
-   <audio id="winSound" src="./assets/audio/win.mp3"></audio>
-   <audio id="failSound" src="./assets/audio/fail.mp3"></audio>
+    <audio id="bgMusic" src="./assets/audio/bg-music.mp3" loop></audio>
+    <audio id="clickSound" src="./assets/audio/click.mp3"></audio>
+    <audio id="warningSound" src="./assets/audio/warning.mp3"></audio>
+    <audio id="winSound" src="./assets/audio/win.mp3"></audio>
+    <audio id="failSound" src="./assets/audio/fail.mp3"></audio>
+    <audio id="eatSound" src="./assets/audio/eat.mp3"></audio>
 
+    <!-- jQuery-js include -->
+    <script src="./assets/js/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap-js include -->
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <!-- jQuery-validate-js include -->
+    <script src="./assets/js/jquery.validate.min.js"></script>
+    <!-- Custom-js include -->
+    <script src="./assets/js/script.js"></script>
 
-   <!-- jQuery-js include -->
-   <script src="./assets/js/jquery-3.6.0.min.js"></script>
-   <!-- Bootstrap-js include -->
-   <script src="./assets/js/bootstrap.min.js"></script>
-   <!-- jQuery-validate-js include -->
-   <script src="./assets/js/jquery.validate.min.js"></script>
-   <!-- Custom-js include -->
-   <script src="./assets/js/script.js"></script>
-
-   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-
-</body>
-
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  </body>
 </html>
