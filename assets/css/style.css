@@ -56,7 +56,13 @@ Author      : jthemes (https://themeforest.net/user/jthemes)
 .progress-bar {
   height: 2rem;
   padding-top: -0.5rem;
-  background: -webkit-gradient(linear, left top, right top, from(#fb506e), to(#b66ef5));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#fb506e),
+    to(#b66ef5)
+  );
   background: linear-gradient(to right, #ff4e50, #f00000);
   z-index: 3;
   margin-top: 0.8rem;
@@ -280,10 +286,14 @@ button {
   }
 }
 
-@media screen and (max-width: 767.98px) {
+@media screen and (max-width: 768.98px) {
   .logo_area {
     text-align: center;
     display: block;
+  }
+
+  .col-md-6 {
+    width: 100% !important;
   }
 
   #startBtn {
@@ -320,12 +330,10 @@ button {
   }
 
   .prev_btn {
-    bottom: 10%;
     left: 17%;
   }
 
   .next_btn {
-    bottom: 10%;
     right: 17%;
   }
 }
@@ -413,7 +421,6 @@ button {
 }
 
 @keyframes bounce {
-
   0%,
   100% {
     transform: translateY(0);
