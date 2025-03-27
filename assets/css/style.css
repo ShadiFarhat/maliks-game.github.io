@@ -393,6 +393,10 @@ button {
   }
 }
 
+#snakeCanvas {
+  touch-action: none;
+}
+
 .question_timer {
   font-size: 2.5rem;
   font-weight: bold;

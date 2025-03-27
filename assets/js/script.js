@@ -1,3 +1,7 @@
+let gridSize = 20;
+let dx = gridSize;
+let dy = 0;
+
 $(function () {
   // ========== Form-select-option ========== //
   $(".step_1").on("click", function () {
@@ -663,7 +667,6 @@ function startSnakeGame() {
   const canvas = document.getElementById("snakeCanvas");
   const ctx = canvas.getContext("2d");
 
-  const gridSize = 20;
   let snake = [
     {
       x: Math.floor(canvas.width / 2 / gridSize) * gridSize,
@@ -671,8 +674,6 @@ function startSnakeGame() {
     },
   ];
   let food = { x: 80, y: 80 };
-  let dx = gridSize;
-  let dy = 0;
   let score = 0;
   let timeLeft = 60;
   let gameLoop;
