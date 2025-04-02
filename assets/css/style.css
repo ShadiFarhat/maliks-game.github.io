@@ -342,6 +342,7 @@ button {
   }
 
   .logo_area img {
+    width: 300px !important;
     margin-left: 0rem !important;
     margin-right: 0rem !important;
   }

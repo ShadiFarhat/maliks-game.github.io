@@ -124,8 +124,10 @@ function move() {
 let timeLeft = 60;
 let countdown = null;
 
-function startTimer() {
+function startTimer(onFinish = timeUpAction) {
   const timerDisplay = document.getElementById("timer");
+  if (!timerDisplay) return;
+
   bgMusic.play();
   bgMusic.volume = 0.5;
 
@@ -138,14 +140,13 @@ function startTimer() {
     timeLeft--;
     timerDisplay.textContent = timeLeft;
 
-    // 🎵 Play warning sound at 10 sec
     if (timeLeft === 3) {
       warningSound.play();
     }
 
     if (timeLeft <= 0) {
       clearInterval(countdown);
-      timeUpAction();
+      onFinish();
     }
   }, 1000);
 }
@@ -607,37 +608,41 @@ function startGame(mode) {
 
   if (mode === "kids") {
     document.getElementById("snake_game_screen").style.display = "block";
-    let countdown = 3;
+
+    let kidsCountdown = 3; // Renamed variable
     const countdownEl = document.getElementById("countdownNumber");
     const countdownContainer = document.getElementById("snakeCountdown");
 
-    countdownEl.textContent = countdown;
+    countdownEl.textContent = kidsCountdown;
     countdownContainer.style.display = "flex";
 
     const countdownInterval = setInterval(() => {
-      countdown--;
-      if (countdown === 0) {
+      kidsCountdown--;
+      if (kidsCountdown === 0) {
         clearInterval(countdownInterval);
         countdownEl.textContent = "GO!";
         setTimeout(() => {
           countdownContainer.style.display = "none";
+          // Start the shared timer and snake game loop:
+          startTimer(() => endSnakeGame("Time's up!"));
           startSnakeGame();
         }, 700);
       } else {
-        countdownEl.textContent = countdown;
+        countdownEl.textContent = kidsCountdown;
         countdownEl.style.animation = "none"; // Restart animation
         countdownEl.offsetHeight; // Trigger reflow
         countdownEl.style.animation = null;
       }
     }, 1000);
   } else if (mode === "teen") {
+    startTimer(() => showTeenResult());
     startTeenGame();
   } else if (mode === "adult") {
     renderQuestions();
     document.getElementById("quiz_wrapper").style.display = "block";
     showTab(currentTab);
     vibrate();
-    startTimer();
+    startTimer(() => evaluateQuizAndShowResult());
   }
 }
 
