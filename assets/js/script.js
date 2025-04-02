@@ -1,6 +1,6 @@
 let gridSize = 20;
-let dx = gridSize;
-let dy = 0;
+dx = gridSize;
+dy = 0;
 
 $(function () {
   // ========== Form-select-option ========== //
@@ -631,7 +631,7 @@ function startGame(mode) {
       }
     }, 1000);
   } else if (mode === "teen") {
-    alert("Teen quiz with images coming soon!");
+    startTeenGame();
   } else if (mode === "adult") {
     renderQuestions();
     document.getElementById("quiz_wrapper").style.display = "block";
@@ -681,7 +681,6 @@ function startSnakeGame() {
   let logo = new Image();
   logo.src = "./assets/images/logo/M.png";
 
-  document.getElementById("snakeTimer").textContent = `Time Left: ${timeLeft}s`;
   document.getElementById("snakeScore").textContent = `Score: ${score}`;
 
   function draw() {
@@ -791,15 +790,6 @@ function startSnakeGame() {
 
   draw(); // draw once before moving
   gameLoop = setInterval(draw, 100); // then move
-  gameTimer = setInterval(() => {
-    timeLeft--;
-    document.getElementById(
-      "snakeTimer"
-    ).textContent = `Time Left: ${timeLeft}s`;
-    if (timeLeft <= 0) {
-      endSnakeGame("Time's up!");
-    }
-  }, 1000);
 }
 
 function enableSwipeControls() {
@@ -835,4 +825,248 @@ function enableSwipeControls() {
       }
     }
   });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("invoiceModal");
+  const input = document.getElementById("invoiceInput");
+
+  modal.style.display = "flex";
+
+  // Use requestAnimationFrame for guaranteed next render cycle
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      input.focus();
+      input.select();
+    }, 50); // small delay to ensure modal is visible
+  });
+});
+
+function submitInvoice() {
+  const input = document.getElementById("invoiceInput");
+  const invoice = input.value.trim();
+
+  if (invoice === "") {
+    input.classList.add("is-invalid");
+    input.focus();
+    return;
+  }
+
+  input.classList.remove("is-invalid");
+  document.getElementById("invoiceModal").style.display = "none";
+}
+
+const teenQuestions = [
+  {
+    image: "./assets/images/products/product1.jpg",
+    options: ["$5", "$10", "$15", "$20"],
+    correct: 1,
+  },
+  {
+    image: "./assets/images/products/product2.jpg",
+    options: ["$12", "$18", "$25", "$30"],
+    correct: 2,
+  },
+
+  {
+    image: "./assets/images/products/product3.jpg",
+    options: ["$1", "$80", "$250", "$130"],
+    correct: 1,
+  },
+
+  {
+    image: "./assets/images/products/product4.jpg",
+    options: ["$12", "$1118", "$25", "$302"],
+    correct: 2,
+  },
+
+  {
+    image: "./assets/images/products/product5.jpg",
+    options: ["$1200", "$8", "$21", "$300"],
+    correct: 1,
+  },
+
+  {
+    image: "./assets/images/products/product6.jpg",
+    options: ["$12", "$18", "$25", "$30"],
+    correct: 0,
+  },
+
+  {
+    image: "./assets/images/products/product7.jpg",
+    options: ["Free", "$15", "$250", "$300"],
+    correct: 1,
+  },
+
+  {
+    image: "./assets/images/products/product8.jpg",
+    options: ["$2", "$10", "$15", "$300"],
+    correct: 2,
+  },
+
+  {
+    image: "./assets/images/products/product9.jpg",
+    options: ["$112", "$138", "$2235", "$3022"],
+    correct: 0,
+  },
+
+  {
+    image: "./assets/images/products/product10.jpg",
+    options: ["$32", "$10", "$200", "$3000"],
+    correct: 0,
+  },
+];
+
+function startTeenGame() {
+  const selected = getRandomTeenQuestions();
+  let currentTeenIndex = 0;
+  let teenScore = 0;
+  let teenTimeLeft = 60;
+  let teenCountdown;
+
+  const quizContainer = document.getElementById("quiz_wrapper");
+  const timerBox = document.querySelector(".question_timer");
+  const timerEl = document.getElementById("timer");
+
+  // 🎵 Music and UI reset
+  bgMusic.currentTime = 0;
+  bgMusic.volume = 0.5;
+  bgMusic.play();
+  failSound.pause();
+  winSound.pause();
+  warningSound.pause();
+
+  document.getElementById("select_mode_screen").style.display = "none";
+  document.getElementById("result_screen").style.display = "none";
+  quizContainer.style.display = "block";
+  timerBox.style.display = "block";
+  timerEl.style.display = "inline"; // 🔥 Make sure timer is visible
+
+  timerEl.textContent = teenTimeLeft;
+
+  // Timer logic
+  if (teenCountdown) clearInterval(teenCountdown);
+  teenCountdown = setInterval(() => {
+    teenTimeLeft--;
+    timerEl.textContent = teenTimeLeft;
+
+    if (teenTimeLeft === 3) warningSound.play();
+
+    if (teenTimeLeft <= 0) {
+      clearInterval(teenCountdown);
+      endTeenGame();
+    }
+  }, 1000);
+
+  showTeenQuestion();
+
+  function showTeenQuestion() {
+    const q = selected[currentTeenIndex];
+
+    quizContainer.innerHTML = `
+    <div class="text-center py-4">
+      <img src="${
+        q.image
+      }" class="img-fluid mb-4 rounded shadow" style="max-height: 300px;" />
+  
+      <h2 class="text-white mb-4">What is the price of this product at Maliks?</h2>
+  
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        ${q.options
+          .map(
+            (opt, i) => `
+            <button
+              class="f_btn rounded-pill text-white animate__animated animate__fadeInUp"
+              style="margin-top: 0 !important; background-color: #b30000; border: 3px solid white; padding: 1rem 2rem; font-size: 1.2rem;"
+              onclick="submitTeenAnswer(${i})"
+            >
+              ${opt}
+            </button>
+          `
+          )
+          .join("")}
+      </div>
+    </div>
+  `;
+  }
+
+  window.submitTeenAnswer = function (selectedIndex) {
+    const q = selected[currentTeenIndex];
+    clickSound.currentTime = 0;
+    clickSound.play();
+
+    if (selectedIndex === q.correct) teenScore++;
+
+    currentTeenIndex++;
+    if (currentTeenIndex >= selected.length) {
+      clearInterval(teenCountdown);
+      endTeenGame();
+    } else {
+      showTeenQuestion();
+    }
+  };
+
+  function endTeenGame() {
+    quizContainer.style.display = "none";
+    timerBox.style.display = "none";
+
+    const resultScreen = document.getElementById("result_screen");
+    resultScreen.style.display = "block";
+
+    document.getElementById(
+      "score_display"
+    ).textContent = `You scored ${teenScore} out of ${selected.length}`;
+
+    const title = document.getElementById("result_title");
+    const reward = document.getElementById("reward_message");
+
+    if (teenScore >= 3) {
+      title.textContent = "🎉 Great job!";
+      reward.textContent = "You won a gift! 🎁";
+      bgMusic.pause();
+      winSound.play();
+      triggerConfetti();
+    } else {
+      title.textContent = "😢 Not quite!";
+      reward.textContent = "Try again for a prize!";
+      bgMusic.volume = 0.3;
+      failSound.play();
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function getRandomTeenQuestions(count = 4) {
+  // Deep copy the array
+  const questionsCopy = [...teenQuestions];
+
+  // Fisher-Yates shuffle
+  for (let i = questionsCopy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [questionsCopy[i], questionsCopy[j]] = [questionsCopy[j], questionsCopy[i]];
+  }
+
+  return questionsCopy.slice(0, count);
+}
+
+function changeDirection(direction) {
+  clickSound.currentTime = 0;
+  clickSound.play();
+
+  if (direction === "up" && dy === 0) {
+    dx = 0;
+    dy = -gridSize;
+  } else if (direction === "down" && dy === 0) {
+    dx = 0;
+    dy = gridSize;
+  } else if (direction === "left" && dx === 0) {
+    dx = -gridSize;
+    dy = 0;
+  } else if (direction === "right" && dx === 0) {
+    dx = gridSize;
+    dy = 0;
+  }
+
+  console.log("Direction changed to:", direction, "dx:", dx, "dy:", dy);
 }
