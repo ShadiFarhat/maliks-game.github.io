@@ -549,7 +549,7 @@ function evaluateQuizAndShowResult() {
   } else {
     title.textContent = "😢 Better luck next time!";
     reward.textContent = "Try again to win a gift!";
-    bgMusic.volume = 0.3;
+    bgMusic.pause();
     failSound.play(); // 😢 play fail
   }
 
@@ -645,6 +645,23 @@ function startSnakeGame() {
   bgMusic.play();
   enableSwipeControls();
 
+  let lastTime = 0;
+  let snakeSpeed = 150; // in ms (adjust as needed)
+
+  function gameLoopFrame(timestamp) {
+    if (!lastTime) lastTime = timestamp;
+    const delta = timestamp - lastTime;
+
+    if (delta >= snakeSpeed) {
+      draw();
+      lastTime = timestamp;
+    }
+
+    if (!snakeGameEnded) {
+      requestAnimationFrame(gameLoopFrame);
+    }
+  }
+
   document.addEventListener("keydown", function (e) {
     clickSound.currentTime = 0;
     clickSound.play(); // 🔊 play on any arrow key
@@ -685,11 +702,11 @@ function startSnakeGame() {
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(logo, food.x, food.y, gridSize, gridSize);
+    ctx.drawImage(logo, food.x, food.y, gridSize * 1.3, gridSize * 1.3);
 
     ctx.fillStyle = "#00ff00";
     snake.forEach((part) => {
-      ctx.fillRect(part.x, part.y, gridSize, gridSize);
+      ctx.fillRect(part.x, part.y, gridSize * 1.3, gridSize * 1.3);
     });
 
     const head = { x: snake[0].x + dx, y: snake[0].y + dy };
@@ -752,14 +769,17 @@ function startSnakeGame() {
       reward.textContent = "You won a gift! 🎁";
       bgMusic.pause();
       winSound.play();
+      winSound.volume = 1;
       triggerConfetti();
     } else {
       title.textContent = "😢 Better luck next time!";
       reward.textContent = "Try again to win a gift!";
-      bgMusic.volume = 0.3;
+      bgMusic.pause();
       failSound.play();
+      failSound.volume = 1;
     }
 
+    snakeGameEnded = true;
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -789,7 +809,8 @@ function startSnakeGame() {
   });
 
   draw(); // draw once before moving
-  gameLoop = setInterval(draw, 100); // then move
+  snakeGameEnded = false;
+  requestAnimationFrame(gameLoopFrame);
 }
 
 function enableSwipeControls() {
@@ -854,6 +875,18 @@ function submitInvoice() {
 
   input.classList.remove("is-invalid");
   document.getElementById("invoiceModal").style.display = "none";
+  document.getElementById("select_mode_screen").style.display = "block";
+
+  // 🎵 Start background music on first real interaction
+  try {
+    bgMusic.currentTime = 0;
+    bgMusic.volume = 0.5;
+    bgMusic.play().catch(() => {
+      console.log("Music play blocked — will retry on next interaction.");
+    });
+  } catch (e) {
+    console.log("Music error:", e);
+  }
 }
 
 const teenQuestions = [
@@ -1029,7 +1062,7 @@ function startTeenGame() {
     } else {
       title.textContent = "😢 Not quite!";
       reward.textContent = "Try again for a prize!";
-      bgMusic.volume = 0.3;
+      bgMusic.pause();
       failSound.play();
     }
 

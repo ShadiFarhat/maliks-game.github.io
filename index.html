@@ -61,20 +61,16 @@
             <span id="timer">60</span>
           </div>
           <!-- Snake Game Screen -->
-          <div
-            id="snake_game_screen"
-            style="display: none"
-            class="text-center py-5"
-          >
+          <div id="snake_game_screen" style="display: none" class="text-center">
             <h1 class="text-white mb-4">Snake Game</h1>
             <div id="snakeCountdown" class="countdown-screen">
               <span id="countdownNumber">3</span>
             </div>
-            <div id="snakeScore" class="text-white mt-2 fs-4"></div>
+            <div id="snakeScore" class="text-white fs-4"></div>
             <canvas
               id="snakeCanvas"
-              width="500"
-              height="500"
+              width="400"
+              height="400"
               style="background: #000; border: 4px solid #fff"
             ></canvas>
             <div id="snakeTouchControls" class="mt-4">
@@ -142,6 +138,19 @@
                 pointer-events: none;
               "
             ></canvas>
+
+            <button
+              onclick="location.reload()"
+              class="f_btn rounded-pill mt-4 animate__animated animate__bounceIn"
+              style="
+                background-color: #b30000;
+                border: 3px solid white;
+                padding: 1rem 2rem;
+                font-size: 1.2rem;
+              "
+            >
+              🔁 Play Again
+            </button>
           </div>
         </div>
       </div>

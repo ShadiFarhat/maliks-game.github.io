@@ -224,6 +224,7 @@ button {
   width: 300px;
   font-size: 20px;
   padding: 20px;
+  background-color: white;
 }
 
 .countdown-screen {
@@ -480,6 +481,7 @@ button {
 .modal-content .f_btn {
   margin-top: 0 !important;
   font-size: 21px !important;
+  background-color: white !important;
 }
 
 .modal-content {
@@ -507,16 +509,27 @@ button {
   margin-top: 2rem;
 }
 
+canvas,
+button {
+  touch-action: manipulation;
+}
+
 .snake-btn {
   background-color: #b30000;
   color: white;
   border: 3px solid white;
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   font-size: 2rem;
   font-weight: bold;
   transition: transform 0.2s;
+}
+
+.snake-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .snake-btn:hover {
