@@ -428,11 +428,9 @@ function renderQuestions() {
         const isCorrect = i === q.correct ? "correct-answer" : "";
         return `
         <div class="form-check position-relative mb-3">
-          <input class="form-check-input d-none" type="radio" id="${inputId}" name="${nameAttr}" value="${i}">
+          <input class="form-check-input visually-hidden" type="radio" id="${inputId}" name="${nameAttr}" value="${i}">
           <label for="${inputId}"
-            class="${stepClass} animate__animated animate__fadeInRight animate_${
-          (i + 1) * 25
-        }ms rounded-pill text-start text-white d-block py-2 px-4 ${isCorrect}">
+            class="${stepClass} custom-radio-label rounded-pill text-start text-white d-block py-2 px-4 ${isCorrect}">
             ${opt}
           </label>
         </div>
@@ -445,7 +443,6 @@ function renderQuestions() {
         <div class="col-md-6 m-auto">
           <div class="content_box py-5 ps-5 position-relative">
 
-            <!-- Step-progress-bar -->
             <div class="step_progress_bar mb-3">
               <div class="progress rounded-pill">
                 <span><i class="far fa-clock"></i></span>
@@ -476,24 +473,44 @@ function renderQuestions() {
     container.innerHTML += stepHTML;
   });
 
-  // 🔥 Activate .active styling on click
+  // 👉 Highlight the selected answer
   document
     .querySelectorAll(".form_items input[type=radio]")
     .forEach((radio) => {
       radio.addEventListener("change", function () {
         vibrate();
-        // Remove .active from siblings
+
         const name = this.name;
         document.querySelectorAll(`input[name='${name}']`).forEach((r) => {
           r.nextElementSibling?.classList?.remove("active");
         });
 
-        // Add .active to selected
         const label = document.querySelector(`label[for='${this.id}']`);
         if (label) label.classList.add("active");
       });
+
+      // 🔧 iPad Fix: manually fire the change event
+      radio.addEventListener("touchstart", function () {
+        this.click();
+      });
     });
 }
+
+// 🔥 Activate .active styling on click
+document.querySelectorAll(".form_items input[type=radio]").forEach((radio) => {
+  radio.addEventListener("change", function () {
+    vibrate();
+    // Remove .active from siblings
+    const name = this.name;
+    document.querySelectorAll(`input[name='${name}']`).forEach((r) => {
+      r.nextElementSibling?.classList?.remove("active");
+    });
+
+    // Add .active to selected
+    const label = document.querySelector(`label[for='${this.id}']`);
+    if (label) label.classList.add("active");
+  });
+});
 
 function getRandomQuestions(count = 4) {
   const shuffled = questions.sort(() => 0.5 - Math.random());
@@ -607,33 +624,24 @@ function startGame(mode) {
   document.getElementById("select_mode_screen").style.display = "none";
 
   if (mode === "kids") {
-    document.getElementById("snake_game_screen").style.display = "block";
+    document.getElementById("select_mode_screen").style.display = "none";
+    document.getElementById("result_screen").style.display = "none";
 
-    let kidsCountdown = 3; // Renamed variable
-    const countdownEl = document.getElementById("countdownNumber");
-    const countdownContainer = document.getElementById("snakeCountdown");
+    // Start the memory game using Phaser
+    document.getElementById("memory_game_screen").style.display = "block";
 
-    countdownEl.textContent = kidsCountdown;
-    countdownContainer.style.display = "flex";
-
-    const countdownInterval = setInterval(() => {
-      kidsCountdown--;
-      if (kidsCountdown === 0) {
-        clearInterval(countdownInterval);
-        countdownEl.textContent = "GO!";
-        setTimeout(() => {
-          countdownContainer.style.display = "none";
-          // Start the shared timer and snake game loop:
-          startTimer(() => endSnakeGame("Time's up!"));
-          startSnakeGame();
-        }, 700);
-      } else {
-        countdownEl.textContent = kidsCountdown;
-        countdownEl.style.animation = "none"; // Restart animation
-        countdownEl.offsetHeight; // Trigger reflow
-        countdownEl.style.animation = null;
-      }
-    }, 1000);
+    // Restart timer for memory game
+    startTimer(() => {
+      document.getElementById("memory_game_screen").style.display = "none";
+      document.getElementById("result_screen").style.display = "block";
+      document.getElementById("result_title").textContent = "⏱ Time's Up!";
+      document.getElementById("score_display").textContent =
+        "You ran out of time!";
+      document.getElementById("reward_message").textContent =
+        "Try again to match all the cards!";
+      bgMusic.pause();
+      failSound.play();
+    });
   } else if (mode === "teen") {
     startTimer(() => showTeenResult());
     startTeenGame();
@@ -644,213 +652,6 @@ function startGame(mode) {
     vibrate();
     startTimer(() => evaluateQuizAndShowResult());
   }
-}
-
-function startSnakeGame() {
-  bgMusic.play();
-  enableSwipeControls();
-
-  let lastTime = 0;
-  let snakeSpeed = 150; // in ms (adjust as needed)
-
-  function gameLoopFrame(timestamp) {
-    if (!lastTime) lastTime = timestamp;
-    const delta = timestamp - lastTime;
-
-    if (delta >= snakeSpeed) {
-      draw();
-      lastTime = timestamp;
-    }
-
-    if (!snakeGameEnded) {
-      requestAnimationFrame(gameLoopFrame);
-    }
-  }
-
-  document.addEventListener("keydown", function (e) {
-    clickSound.currentTime = 0;
-    clickSound.play(); // 🔊 play on any arrow key
-
-    if (e.key === "ArrowUp" && dy === 0) {
-      dx = 0;
-      dy = -gridSize;
-    } else if (e.key === "ArrowDown" && dy === 0) {
-      dx = 0;
-      dy = gridSize;
-    } else if (e.key === "ArrowLeft" && dx === 0) {
-      dx = -gridSize;
-      dy = 0;
-    } else if (e.key === "ArrowRight" && dx === 0) {
-      dx = gridSize;
-      dy = 0;
-    }
-  });
-
-  const canvas = document.getElementById("snakeCanvas");
-  const ctx = canvas.getContext("2d");
-
-  let snake = [
-    {
-      x: Math.floor(canvas.width / 2 / gridSize) * gridSize,
-      y: Math.floor(canvas.height / 2 / gridSize) * gridSize,
-    },
-  ];
-  let food = { x: 80, y: 80 };
-  let score = 0;
-  let timeLeft = 60;
-  let gameLoop;
-  let gameTimer;
-  let logo = new Image();
-  logo.src = "./assets/images/logo/M.png";
-
-  document.getElementById("snakeScore").textContent = `Score: ${score}`;
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(logo, food.x, food.y, gridSize * 1.3, gridSize * 1.3);
-
-    ctx.fillStyle = "#00ff00";
-    snake.forEach((part) => {
-      ctx.fillRect(part.x, part.y, gridSize * 1.3, gridSize * 1.3);
-    });
-
-    const head = { x: snake[0].x + dx, y: snake[0].y + dy };
-    snake.unshift(head);
-
-    if (
-      Math.abs(head.x - food.x) < gridSize &&
-      Math.abs(head.y - food.y) < gridSize
-    ) {
-      score++;
-      document.getElementById("snakeScore").textContent = `Score: ${score}`;
-      eatSound.currentTime = 0;
-      eatSound.play(); // ✅ added this
-
-      food = {
-        x: Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize,
-        y: Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize,
-      };
-    } else {
-      snake.pop();
-    }
-
-    // Check wall collision
-    if (
-      head.x < 0 ||
-      head.x >= canvas.width ||
-      head.y < 0 ||
-      head.y >= canvas.height
-    ) {
-      endSnakeGame("Game Over! You hit the wall.");
-    }
-
-    for (let i = 1; i < snake.length; i++) {
-      if (head.x === snake[i].x && head.y === snake[i].y) {
-        endSnakeGame("Oops! You ran into yourself.");
-      }
-    }
-  }
-
-  function endSnakeGame(message) {
-    clearInterval(gameLoop);
-    clearInterval(gameTimer);
-
-    // Hide snake game
-    document.getElementById("snake_game_screen").style.display = "none";
-
-    // Show result screen
-    const resultScreen = document.getElementById("result_screen");
-    resultScreen.style.display = "block";
-
-    // Fill in result
-    const title = document.getElementById("result_title");
-    const reward = document.getElementById("reward_message");
-    const scoreBox = document.getElementById("score_display");
-
-    scoreBox.textContent = `Your score: ${score}`;
-
-    if (score >= 5) {
-      title.textContent = "🎉 Congratulations!";
-      reward.textContent = "You won a gift! 🎁";
-      bgMusic.pause();
-      winSound.play();
-      winSound.volume = 1;
-      triggerConfetti();
-    } else {
-      title.textContent = "😢 Better luck next time!";
-      reward.textContent = "Try again to win a gift!";
-      bgMusic.pause();
-      failSound.play();
-      failSound.volume = 1;
-    }
-
-    snakeGameEnded = true;
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function resetSnakeGame() {
-    snake = [{ x: 160, y: 160 }];
-    dx = gridSize;
-    dy = 0;
-    score = 0;
-    document.getElementById("snake_game_screen").style.display = "none";
-    document.getElementById("select_mode_screen").style.display = "block";
-  }
-
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowUp" && dy === 0) {
-      dx = 0;
-      dy = -gridSize;
-    } else if (e.key === "ArrowDown" && dy === 0) {
-      dx = 0;
-      dy = gridSize;
-    } else if (e.key === "ArrowLeft" && dx === 0) {
-      dx = -gridSize;
-      dy = 0;
-    } else if (e.key === "ArrowRight" && dx === 0) {
-      dx = gridSize;
-      dy = 0;
-    }
-  });
-
-  draw(); // draw once before moving
-  snakeGameEnded = false;
-  requestAnimationFrame(gameLoopFrame);
-}
-
-function enableSwipeControls() {
-  let touchStartX = 0;
-  let touchStartY = 0;
-
-  document.addEventListener("touchstart", function (e) {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  });
-
-  document.addEventListener("touchend", function (e) {
-    const dxSwipe = e.changedTouches[0].clientX - touchStartX;
-    const dySwipe = e.changedTouches[0].clientY - touchStartY;
-
-    if (Math.abs(dxSwipe) > Math.abs(dySwipe)) {
-      // Horizontal swipe
-      if (dxSwipe > 30 && dx === 0) {
-        dx = gridSize;
-        dy = 0;
-      } else if (dxSwipe < -30 && dx === 0) {
-        dx = -gridSize;
-        dy = 0;
-      }
-    } else {
-      // Vertical swipe
-      if (dySwipe > 30 && dy === 0) {
-        dx = 0;
-        dy = gridSize;
-      } else if (dySwipe < -30 && dy === 0) {
-        dx = 0;
-        dy = -gridSize;
-      }
-    }
-  });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -1088,23 +889,148 @@ function getRandomTeenQuestions(count = 4) {
   return questionsCopy.slice(0, count);
 }
 
-function changeDirection(direction) {
-  clickSound.currentTime = 0;
-  clickSound.play();
+// Matching Game using Phaser.js
+const config = {
+  type: Phaser.AUTO,
+  width: 700,
+  height: 750,
+  parent: "memory_game_screen",
+  scene: {
+    preload: preload,
+    create: create,
+    update: update,
+  },
+  backgroundColor: "#000000",
+  scale: {
+    mode: Phaser.Scale.NONE,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
+};
 
-  if (direction === "up" && dy === 0) {
-    dx = 0;
-    dy = -gridSize;
-  } else if (direction === "down" && dy === 0) {
-    dx = 0;
-    dy = gridSize;
-  } else if (direction === "left" && dx === 0) {
-    dx = -gridSize;
-    dy = 0;
-  } else if (direction === "right" && dx === 0) {
-    dx = gridSize;
-    dy = 0;
+const game = new Phaser.Game(config);
+
+let cards = [];
+let flippedCards = [];
+let matchedPairs = 0;
+let canFlip = true;
+const cardValues = [1, 2, 3, 4, 5, 6]; // 6 pairs
+
+function preload() {
+  this.load.audio("flipSound", "./assets/audio/flip.mp3");
+  this.load.audio("matchSound", "./assets/audio/match.mp3");
+  this.load.image("card_back", "./assets/images/card_back.png");
+  this.load.audio("winSound", "./assets/audio/win.mp3");
+  for (let i = 1; i <= 6; i++) {
+    this.load.image(`card_${i}`, `./assets/images/card_${i}.png`);
   }
+}
 
-  console.log("Direction changed to:", direction, "dx:", dx, "dy:", dy);
+let cardBackTexture = "card_back";
+let flipSound, matchSound;
+let winPhaserSound;
+
+function create() {
+  const canvasWidth = this.sys.game.canvas.width;
+  const canvasHeight = this.sys.game.canvas.height;
+  winPhaserSound = this.sound.add("winSound");
+
+  let isTablet = window.innerWidth <= 1024;
+
+  const rows = 3;
+  const cols = 4;
+  const cardWidth = isTablet ? 80 : 100;
+  const cardHeight = isTablet ? 110 : 130;
+  const spacingX = 170;
+  const spacingY = 170;
+  const startX = (700 - (cols - 1) * spacingX) / 2;
+  const startY = (550 - (rows - 1) * spacingY) / 2;
+
+  let values = [...cardValues, ...cardValues];
+  Phaser.Utils.Array.Shuffle(values);
+
+  for (let i = 0; i < values.length; i++) {
+    const row = Math.floor(i / cols);
+    const col = i % cols;
+
+    const x = startX + col * spacingX;
+    const y = startY + row * spacingY;
+
+    flipSound = this.sound.add("flipSound", { volume: 1 });
+    matchSound = this.sound.add("matchSound", { volume: 1 });
+
+    let card = this.add.image(x, y, cardBackTexture).setInteractive();
+    card.setDisplaySize(cardWidth, cardHeight); // 😍 clean card size
+
+    card.value = values[i];
+    card.isFlipped = false;
+    card.isMatched = false;
+    card.frontTexture = "card_" + values[i];
+    const cardScale = Math.min(
+      this.scale.width / 1000,
+      this.scale.height / 800
+    ); // responsive scale
+    card.setScale(cardScale); // 👈 apply this to each card after creation
+
+    card.on("pointerdown", () => {
+      if (!canFlip || card.isFlipped || card.isMatched) return;
+      flipSound.play();
+
+      card.setTexture(card.frontTexture);
+      card.isFlipped = true;
+      flippedCards.push(card);
+
+      if (flippedCards.length === 2) {
+        canFlip = false;
+        checkMatch.call(this); // 👈 this line is important!
+      }
+    });
+
+    cards.push(card);
+  }
+}
+
+function checkMatch() {
+  const [card1, card2] = flippedCards;
+
+  if (card1.value === card2.value) {
+    card1.isMatched = true;
+    card2.isMatched = true;
+    matchSound.play();
+    matchedPairs++;
+    flippedCards = [];
+    canFlip = true;
+
+    if (matchedPairs === cardValues.length) {
+      try {
+        bgMusic.pause();
+        winPhaserSound.play();
+      } catch (e) {
+        console.log("Win sound failed to play:", e);
+      }
+
+      setTimeout(() => {
+        document.getElementById("memory_game_screen").style.display = "none"; // ✅ Hide canvas
+        document.getElementById("result_screen").style.display = "block";
+        document.getElementById("score_display").textContent =
+          "You matched all cards!";
+        document.getElementById("result_title").textContent = "🎉 Well Done!";
+        document.getElementById("reward_message").textContent =
+          "You won a gift! 🎁";
+        triggerConfetti();
+      }, 600);
+    }
+  } else {
+    this.time.delayedCall(800, () => {
+      card1.setTexture("card_back");
+      card2.setTexture("card_back");
+      card1.isFlipped = false;
+      card2.isFlipped = false;
+      flippedCards = [];
+      canFlip = true;
+    });
+  }
+}
+
+function update() {
+  // Optional logic
 }

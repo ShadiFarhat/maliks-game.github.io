@@ -240,10 +240,51 @@ button {
   justify-content: center;
 }
 
+.custom-radio-label {
+  background-color: #444;
+  border: 2px solid #999;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.custom-radio-label:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 3px solid #00bfff !important;
+  box-shadow: 0 0 10px #00bfff;
+  transform: scale(1.04);
+}
+
+.custom-radio-label.active {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 3px solid #00bfff !important;
+  box-shadow: 0 0 10px #00bfff;
+  transform: scale(1.04);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
 #countdownNumber {
   font-size: 8rem;
   color: #ff4e50;
   animation: pop 1s ease-in-out;
+}
+
+#memory_game_screen {
+  width: 700px;
+  height: 650px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 20px #ffaaaa;
+  background-color: #000;
 }
 
 @keyframes pop {

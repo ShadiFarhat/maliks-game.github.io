@@ -60,38 +60,13 @@
           <div id="game_timer" class="question_timer text-white mb-3">
             <span id="timer">60</span>
           </div>
-                    <!-- Snake Game Screen -->
-          <div id="snake_game_screen" style="display: none" class="text-center">
-            <h1 class="text-white mb-4">Snake Game</h1>
-            <div id="snakeCountdown" class="countdown-screen">
-              <span id="countdownNumber">3</span>
-            </div>
-            <div id="snakeScore" class="text-white fs-4"></div>
-            <canvas
-              id="snakeCanvas"
-              width="400"
-              height="400"
-              style="background: #000; border: 4px solid #fff"
-            ></canvas>
-            <div id="snakeTouchControls" class="mt-4">
-              <div class="d-flex justify-content-center mb-2">
-                <button class="snake-btn" onclick="changeDirection('up')">
-                  ⬆️
-                </button>
-              </div>
-              <div class="d-flex justify-content-center gap-4">
-                <button class="snake-btn" onclick="changeDirection('left')">
-                  ⬅️
-                </button>
-                <button class="snake-btn" onclick="changeDirection('down')">
-                  ⬇️
-                </button>
-                <button class="snake-btn" onclick="changeDirection('right')">
-                  ➡️
-                </button>
-              </div>
-            </div>
+
+          <div id="memory_game_screen" style="display: none" class="text-center py-5">
+            <h1 class="text-white ">🧠 Memory Matching Game</h1>
+            <div id="memoryGameBoard" class="d-flex flex-wrap justify-content-center"></div>
+            <p class="text-white fs-4 mb-0">Time Left: <span id="memoryTimer">60</span>s</p>
           </div>
+          
 
           <div id="quiz_wrapper" style="display: none">
             <form class="multisteps_form" id="wizard" method="POST" action="#">
@@ -186,8 +161,12 @@
     <script src="./assets/js/bootstrap.min.js"></script>
     <!-- jQuery-validate-js include -->
     <script src="./assets/js/jquery.validate.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.88.2/dist/phaser.min.js"></script>
+
     <!-- Custom-js include -->
     <script src="./assets/js/script.js"></script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   </body>
