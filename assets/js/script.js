@@ -157,48 +157,34 @@ function timeUpAction() {
 
 const questions = [
   {
-    question:
-      "What is the primary benefit of Malik's custom printing services?",
-    options: [
-      "Limited design options",
-      "Personalization for unique branding",
-      "Standardized templates only",
-    ],
+    question: "Which paper size is used most in offices worldwide?",
+    options: ["A3", "A4", "Letter"],
     correct: 1,
   },
   {
-    question: "Which item can you personalize using Malik's printing services?",
-    options: ["Aprons", "Oven gloves", "Both A and B"],
-    correct: 2,
+    question: "Which color mode do printers use?",
+    options: ["CMYK", "RGB", "Monochrome"],
+    correct: 0,
   },
   {
-    question:
-      "What type of products does Malik's offer for customization in the kitchen category?",
+    question: "What does CMYK in printing refers to ?",
     options: [
-      "Custom aprons & oven gloves",
+      "Cyan, Magenta, Yellow, and Black",
       "Personalized cutting boards",
-      "Customized spice jars",
+      "Contrast, Matte, Yellow, and Kaleidoscope",
     ],
     correct: 0,
   },
   {
     question:
-      "How can personalized kitchen tools from Malik's benefit a business?",
-    options: [
-      "They can't; they're only for personal use",
-      "Enhance brand visibility in culinary settings",
-      "Serve as standard kitchen equipment",
-    ],
-    correct: 1,
+      "In branding, what do we call a short, catchy phrase used to communicate a brand’s message?",
+    options: ["Hashtag", "Logo", "Slogan"],
+    correct: 2,
   },
   {
-    question: "What is a popular customized gift item at Malik's?",
-    options: [
-      "Standardized mugs",
-      "Personalized mugs with custom prints",
-      "Generic keychains",
-    ],
-    correct: 1,
+    question: "What is Malik's Slogan?",
+    options: ["Mahluli", "We've got it all!", "Read. Learn. Grow"],
+    correct: 0,
   },
   {
     question: "Which of the following can be printed on at Malik's?",
@@ -206,21 +192,17 @@ const questions = [
     correct: 2,
   },
   {
-    question: "What is the advantage of printing on plexi LED items?",
+    question: "Does Malik’s have TikTok?",
     options: [
-      "Dull display",
-      "Vibrant illuminated designs",
-      "Limited color options",
+      "No, they only use Instagram and Facebook",
+      "Yes, their handle is @malikslebanon",
+      "Yes, their handle is @malikbooks",
     ],
     correct: 1,
   },
   {
-    question: "Why choose Malik's for printing on smokers' products?",
-    options: [
-      "Generic designs",
-      "Custom branding opportunities",
-      "Pre-set templates only",
-    ],
+    question: "What is Malik’s page name on Instagram?",
+    options: ["@malikbooks", "@malikslebanon", "@malik.bookshop"],
     correct: 1,
   },
   {
@@ -229,11 +211,12 @@ const questions = [
     correct: 2,
   },
   {
-    question: "How does printing on clocks serve as a promotional tool?",
+    question: "Does Malik’s have Twitter?",
     options: [
-      "Displays time only",
-      "Keeps brand visible daily",
-      "Acts as a regular clock",
+      "Yes, @MalikBooks",
+      "Yes, @MaliksLebanon",
+      "Yes, @Malik_Bookshop",
+      "No, they only use Instagram and Facebook",
     ],
     correct: 1,
   },
@@ -243,172 +226,102 @@ const questions = [
     correct: 2,
   },
   {
-    question: "Why are customized puzzles a unique gift option?",
-    options: [
-      "They are generic",
-      "Offer personalized entertainment",
-      "Limited to standard images",
-    ],
-    correct: 1,
+    question: "Complete the following sentence: منطبع كل شي",
+    options: ["إلا الحبر", "إلا الكذب", "عكل شي"],
+    correct: 2,
   },
   {
-    question: "What is the benefit of printing on trophies?",
-    options: [
-      "Generic awards",
-      "Personalized recognition",
-      "Standardized designs",
-    ],
-    correct: 1,
-  },
-  {
-    question: "How can businesses utilize printed bottles from Malik's?",
-    options: [
-      "Generic water containers",
-      "Promotional merchandise",
-      "Regular drinkware",
-    ],
-    correct: 1,
-  },
-  {
-    question: "What is a unique feature of printing on coasters?",
-    options: [
-      "Standard designs",
-      "Custom messages or logos",
-      "Limited to specific materials",
-    ],
-    correct: 1,
-  },
-  {
-    question: "How does printing on flags benefit events?",
-    options: [
-      "Generic decoration",
-      "Custom branding for visibility",
-      "Standard flag designs",
-    ],
-    correct: 1,
-  },
-  {
-    question: "What is the advantage of customizing mini-me figures?",
-    options: ["Generic figurines", "Personalized replicas", "Standard models"],
-    correct: 1,
-  },
-  {
-    question: "Why choose Malik's for printing on pillows?",
-    options: [
-      "Limited design options",
-      "Custom comfort and branding",
-      "Standard pillowcases",
-    ],
-    correct: 1,
-  },
-  {
-    question: "What is the purpose of printing on rocky tiles?",
-    options: [
-      "Generic home decor",
-      "Personalized decorative pieces",
-      "Standard tile patterns",
-    ],
+    question: "When did Malik’s first launch?",
+    options: ["1995", "1988", "2000"],
     correct: 1,
   },
   {
     question:
-      "How can wooden items be enhanced through Malik's printing services?",
+      "Which of the following printing services do we offer for businesses?",
     options: [
-      "Generic wood products",
-      "Custom engravings or prints",
-      "Standard wood finishes",
+      "Business card printing",
+      "Brochure and flyer printing",
+      "Large format printing (banners, posters)",
+      "All of the above",
     ],
-    correct: 1,
+    correct: 3,
   },
   {
-    question: "What is a benefit of printing on calendars?",
+    question: "We offer custom printing solutions for:",
     options: [
-      "Generic date display",
-      "Year-round brand exposure",
-      "Standard calendar layouts",
+      "Personalized gifts",
+      "Corporate materials (brochures, letterheads)",
+      "Event materials (banners, posters)",
+      "All of the above",
     ],
-    correct: 1,
+    correct: 3,
   },
   {
-    question: "How does printing on crystals serve as a gift option?",
+    question: "We can help you design and print:",
     options: [
-      "Generic ornaments",
-      "Elegant personalized keepsakes",
-      "Standard crystal designs",
+      "Custom t-shirts and merchandise",
+      "Custom banners for events",
+      "High-quality brochures for marketing",
+      "All of the above",
     ],
-    correct: 1,
+    correct: 3,
   },
   {
-    question: "What is the advantage of customizing mouse pads?",
+    question:
+      "We specialize in printing high-quality marketing materials like:",
     options: [
-      "Generic desk accessory",
-      "Personalized workspace branding",
-      "Standard mouse pad designs",
+      "Flyers and brochures",
+      "Business cards and stationery",
+      "Event signage and posters",
+      "All of the above",
     ],
-    correct: 1,
+    correct: 3,
   },
   {
-    question: "Why print on plates through Malik's services?",
+    question: "What makes our printing service stand out?",
     options: [
-      "Generic dinnerware",
-      "Custom commemorative items",
-      "Standard plate patterns",
+      "Fast turnaround and excellent customer service",
+      "High quality print materials and options",
+      "Custom designs for any project",
+      "All of the above",
     ],
-    correct: 1,
+    correct: 3,
   },
   {
-    question: "How can tiles and frames be personalized at Malik's?",
-    options: [
-      "Generic home accessories",
-      "Custom images or messages",
-      "Standard designs only",
-    ],
-    correct: 1,
+    question: "We offer custom printing for which of the following?",
+    options: ["Invitations", "Calendars", "Posters", "All of the above"],
+    correct: 3,
   },
   {
-    question: "What is the benefit of Malik's finishing & binding services?",
+    question: "Do we offer eco-friendly printing options?",
     options: [
-      "Basic document assembly",
-      "Professional presentation of materials",
-      "Standard binding options only",
+      "Yes, we offer recycled paper and eco-friendly inks",
+      "No, all of our materials are traditional",
+      "We do not focus on eco-friendly options",
+      "We do not focus on eco-friendly options",
     ],
-    correct: 1,
+    correct: 0,
   },
   {
-    question: "How can promo prints from Malik's enhance marketing?",
+    question: "What is the most popular use for our vinyl printing?",
     options: [
-      "Generic promotional materials",
-      "Custom-designed marketing tools",
-      "Standard templates",
+      "Custom stickers and decals",
+      "Large outdoor banners",
+      "Vehicle wraps",
+      "All of the above",
     ],
-    correct: 1,
+    correct: 3,
   },
   {
-    question: "What is the advantage of Malik's packaging services?",
+    question:
+      "Do we provide stamp printing services for businesses and personal use?",
     options: [
-      "Generic packaging solutions",
-      "Customized packaging for brand identity",
-      "Standard box designs",
+      "Yes, we create custom rubber stamps",
+      "No, we only focus on paper-based printing",
+      "Yes, but only for corporate clients",
+      "All of the above",
     ],
-    correct: 1,
-  },
-  {
-    question: "Why utilize Malik's small prints services?",
-    options: [
-      "Limited print options",
-      "High-quality prints for small-scale needs",
-      "Standard print sizes only",
-    ],
-    correct: 1,
-  },
-  {
-    question: "How do Malik's design services benefit clients?",
-    options: [
-      "Generic design assistance",
-      "Tailored creative solutions",
-      "Standardized design templates",
-    ],
-    correct: 1,
+    correct: 3,
   },
 ];
 
@@ -698,61 +611,77 @@ function submitInvoice() {
 const teenQuestions = [
   {
     image: "./assets/images/products/product1.jpg",
-    options: ["$5", "$10", "$15", "$20"],
+    question: "How much does this Porodo transparent mechanical keyboard cost?",
+    options: ["$350", "$47", "$600", "$790"],
     correct: 1,
+    material: "Porodo Transparent Mechanical Keyboard",
   },
   {
     image: "./assets/images/products/product2.jpg",
-    options: ["$12", "$18", "$25", "$30"],
-    correct: 2,
+    question:
+      "How much does it cost to get an International Driving License at Maliks?",
+    options: ["$450", "$60", "$750", "$1000"],
+    correct: 1,
+    material: "International Driving License Service",
   },
-
   {
     image: "./assets/images/products/product3.jpg",
-    options: ["$1", "$80", "$250", "$130"],
+    question:
+      "How much does it cost to print 1000 double-sided business cards at Maliks (before VAT)?",
+    options: ["$2900", "$39", "$4900", "$590"],
     correct: 1,
+    material: "1000 Recto Verso Business Cards",
   },
-
-  {
-    image: "./assets/images/products/product4.jpg",
-    options: ["$12", "$1118", "$25", "$302"],
-    correct: 2,
-  },
-
   {
     image: "./assets/images/products/product5.jpg",
-    options: ["$1200", "$8", "$21", "$300"],
-    correct: 1,
+    question: "How much does this neck massager cost at Maliks?",
+    options: ["$405", "$550", "$65", "$75"],
+    correct: 2,
+    material: "Electric Neck Massager",
   },
-
   {
     image: "./assets/images/products/product6.jpg",
-    options: ["$12", "$18", "$25", "$30"],
-    correct: 0,
+    question: "How much does this 3D Name Flip cost at Maliks?",
+    options: ["$190.99", "$24.24", "$290.99", "$34.99"],
+    correct: 1,
+    material: "3D Printed Name Flip",
   },
-
   {
     image: "./assets/images/products/product7.jpg",
-    options: ["Free", "$15", "$250", "$300"],
-    correct: 1,
+    question: "How much does an A4-sized 2D Mini Me cost at Maliks?",
+    options: ["$190.99", "$220.50", "$27.15", "Free"],
+    correct: 2,
+    material: "2D Mini Me – A4 Size",
   },
-
   {
     image: "./assets/images/products/product8.jpg",
-    options: ["$2", "$10", "$15", "$300"],
+    question:
+      "How much does it cost to print 8 passport-sized photos at Maliks?",
+    options: ["$3.99", "$4.50", "$5.40", "$6.99"],
     correct: 2,
+    material: "Passport Photos – 8 pcs",
   },
-
+  {
+    image: "./assets/images/products/product4.jpg",
+    question: "How much does it cost to customize a car mug at Maliks?",
+    options: ["$250.00", "$290.99", "$33.74", "$39.00"],
+    correct: 2,
+    material: "Customizable Car Mug",
+  },
   {
     image: "./assets/images/products/product9.jpg",
-    options: ["$112", "$138", "$2235", "$3022"],
-    correct: 0,
+    question: "Can you get a personalized door mat at Maliks?",
+    options: ["No", "Yes, only with text", "Yes, with text and size options"],
+    correct: 2,
+    material: "Custom Door Mat – Price Varies by Size",
   },
-
   {
     image: "./assets/images/products/product10.jpg",
-    options: ["$32", "$10", "$200", "$3000"],
-    correct: 0,
+    question:
+      "How much does it cost to print an A3-sized custom wall calendar at Maliks?",
+    options: ["$290.99", "$340.50", "$40.26", "$45.00"],
+    correct: 2,
+    material: "A3 Wall Calendar",
   },
 ];
 
@@ -808,7 +737,8 @@ function startTeenGame() {
         q.image
       }" class="img-fluid mb-4 rounded shadow" style="max-height: 300px;" />
   
-      <h2 class="text-white mb-4">What is the price of this product at Maliks?</h2>
+      <h2 class="text-white mb-2">${q.question}</h2>
+      <p class="text-warning fs-5 mb-3">${q.material}</p>
   
       <div class="d-flex flex-wrap justify-content-center gap-3">
         ${q.options
