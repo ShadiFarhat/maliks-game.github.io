@@ -561,6 +561,7 @@ function startGame(mode) {
   } else if (mode === "adult") {
     renderQuestions();
     document.getElementById("quiz_wrapper").style.display = "block";
+    document.querySelector(".question_timer").style.display = "block"; // ✅ Add this
     showTab(currentTab);
     vibrate();
     startTimer(() => evaluateQuizAndShowResult());
