@@ -121,27 +121,50 @@ function move() {
   }
 }
 
-let timeLeft = 60;
+let timeLeft = 30;
 let countdown = null;
 
 function startTimer(onFinish = timeUpAction) {
   const timerDisplay = document.getElementById("timer");
-  if (!timerDisplay) return;
+  if (!timerDisplay) {
+    console.warn("❌ Timer element not found!");
+    return;
+  }
 
-  bgMusic.play();
-  bgMusic.volume = 0.5;
+  try {
+    const playPromise = bgMusic.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          bgMusic.volume = 0.5;
+        })
+        .catch((err) => {
+          console.warn("🎵 Music autoplay blocked:", err);
+        });
+    }
+  } catch (e) {
+    console.warn("⚠️ Music error:", e);
+  }
 
   if (countdown) clearInterval(countdown);
 
-  timeLeft = 60;
+  timeLeft = 30;
   timerDisplay.textContent = timeLeft;
 
   countdown = setInterval(() => {
     timeLeft--;
-    timerDisplay.textContent = timeLeft;
+
+    // 👇 iOS Safari-friendly repaint trick
+    requestAnimationFrame(() => {
+      timerDisplay.textContent = timeLeft;
+    });
 
     if (timeLeft === 3) {
-      warningSound.play();
+      try {
+        warningSound.play();
+      } catch (e) {
+        console.warn("⚠️ warningSound issue:", e);
+      }
     }
 
     if (timeLeft <= 0) {
@@ -561,10 +584,13 @@ function startGame(mode) {
   } else if (mode === "adult") {
     renderQuestions();
     document.getElementById("quiz_wrapper").style.display = "block";
-    document.querySelector(".question_timer").style.display = "block"; // ✅ Add this
+    document.querySelector(".question_timer").style.display = "block";
     showTab(currentTab);
-    vibrate();
-    startTimer(() => evaluateQuizAndShowResult());
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        startTimer(() => evaluateQuizAndShowResult());
+      }, 50); // small buffer to ensure DOM is ready
+    });
   }
 }
 
@@ -690,7 +716,7 @@ function startTeenGame() {
   const selected = getRandomTeenQuestions();
   let currentTeenIndex = 0;
   let teenScore = 0;
-  let teenTimeLeft = 60;
+  let teenTimeLeft = 30;
   let teenCountdown;
 
   const quizContainer = document.getElementById("quiz_wrapper");
