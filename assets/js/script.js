@@ -121,7 +121,7 @@ function move() {
   }
 }
 
-let timeLeft = 30;
+let timeLeft = 60;
 let countdown = null;
 
 function startTimer(onFinish = timeUpAction) {
@@ -148,7 +148,7 @@ function startTimer(onFinish = timeUpAction) {
 
   if (countdown) clearInterval(countdown);
 
-  timeLeft = 30;
+  timeLeft = 60;
   timerDisplay.textContent = timeLeft;
 
   countdown = setInterval(() => {
@@ -716,7 +716,7 @@ function startTeenGame() {
   const selected = getRandomTeenQuestions();
   let currentTeenIndex = 0;
   let teenScore = 0;
-  let teenTimeLeft = 30;
+  let teenTimeLeft = 60;
   let teenCountdown;
 
   const quizContainer = document.getElementById("quiz_wrapper");
