@@ -647,7 +647,7 @@ const teenQuestions = [
     image: "./assets/images/products/product2.jpg",
     question:
       "How much does it cost to get an International Driving License at Maliks?",
-    options: ["$450", "$60", "$750", "$1000"],
+    options: ["$450", "$80", "$750", "$1000"],
     correct: 1,
     material: "International Driving License Service",
   },
